@@ -1,5 +1,7 @@
 package com.hoenn.pokemoncenter.pokemon_center_api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
@@ -14,6 +16,7 @@ public class NurseJoy {
     private String username;
 
     @NotBlank(message = "Every Nurse needs a password!")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @NotBlank(message = "Every Nurse needs a name!")
