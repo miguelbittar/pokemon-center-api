@@ -2,6 +2,7 @@ package com.hoenn.pokemoncenter.pokemon_center_api.service;
 
 import com.hoenn.pokemoncenter.pokemon_center_api.model.NurseJoy;
 import com.hoenn.pokemoncenter.pokemon_center_api.repository.NurseJoyRepository;
+import com.hoenn.pokemoncenter.pokemon_center_api.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,11 +14,13 @@ public class AuthService {
 
     private final NurseJoyRepository nurseJoyRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtil jwtUtil;
 
     @Autowired
-    public AuthService(NurseJoyRepository nurseJoyRepository, PasswordEncoder passwordEncoder){
+    public AuthService(NurseJoyRepository nurseJoyRepository, PasswordEncoder passwordEncoder, JwtUtil jwtUtil){
         this.nurseJoyRepository = nurseJoyRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtil = jwtUtil;
     }
 
     public NurseJoy register(NurseJoy nurseJoy){
@@ -38,7 +41,7 @@ public class AuthService {
             throw new RuntimeException("Invalid Password");
         }
 
-            return "JWT_TOKEN_NURSE_JOY";
+            return jwtUtil.generateToken(username);
         }
 
 }
